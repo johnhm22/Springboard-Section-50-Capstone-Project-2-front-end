@@ -1,0 +1,86 @@
+import { useParams, Link } from 'react-router-dom';
+import EstateApi from './api';
+import React, {useState, useEffect, Redirect} from "react";
+import moment from "moment";
+import axios from 'axios';
+import IssueUpdateForm from './IssueUpdateForm';
+
+
+
+function IssueHistory () {
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    const {user, id} = useParams();
+
+    const [issueHistory, setIssueHistory] = useState();
+
+    async function updateHistory(update_by, description, checked) {
+        try {
+            //add in authentication of username and password
+            console.log("checked is: ", checked);
+            const status = checked === true? 'closed': 'open'
+            console.log("status in updateHistory function ", status);
+            let res = await axios({
+              method: 'patch',
+              url: `http://localhost:3001/issues/${user}/${id}/history`,
+              data: {
+                update_by,
+                description,
+                status
+            }
+          });
+          setIssueHistory(issueHistory => [...issueHistory, ...res.data])
+
+      } catch(err) {
+          console.log(err);
+      }
+    }
+
+useEffect( () => {
+    async function getHistoryOfIssue(user, id) {
+        let history = await EstateApi.getHistoryOfIssue(user, id);
+        setIssueHistory([...history])
+        setIsLoading(false);
+    }
+    getHistoryOfIssue(user, id);
+    }, [] 
+    )
+
+    if (isLoading) {
+        return <p>Loading &hellip;</p>;
+      }
+
+    return(
+        <>
+        <div className="container mt-5">
+            <div className="row justify-content-md-center">
+                <div className="col-8">
+                <h4>Update history for this issue</h4>
+                <table className="table table-striped">
+                <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Updated by</th>
+                    <th>Description</th>
+                    </tr>
+                </thead>
+                {issueHistory.map(history => (
+                <tbody>
+                    <tr>
+                    <td>{moment(history.created_on).format("ddd Do MMMM")}</td>          
+                    <td>{history.update_by}</td>
+                    <td>{history.description}</td>
+                    </tr>
+                </tbody>
+                ))}
+                </table>
+                <IssueUpdateForm updateHistory={updateHistory}/>
+                </div>
+            </div>
+        </div>
+        </>
+    )
+}
+
+export default IssueHistory;
