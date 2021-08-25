@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import UserContext from './userContext';
+import './IssueUpdateForm.css';
 
 
 
@@ -12,13 +14,11 @@ const IssueUpdateForm = ({updateHistory}) => {
     const [formData, setFormData] = useState(initialState);
 
     
-    const user = useContext(UserContext)
-    const username = user.username
+    const loggedInUser = useContext(UserContext)
+    const username = loggedInUser.username
 
 
 const handleChange = (e) => {
-    console.log("e.target", e.target)
-    console.log("e.target.checked", e.target.checked);
     const checked = e.target.checked;
     const {name, value} = e.target;
     setFormData(formdata => ({
@@ -30,15 +30,15 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formData in handleSubmit", formData);
     const {description, checked} = formData;
     updateHistory(username, description, checked);
     setFormData(initialState);
 }
 
+if(loggedInUser){
 return (
-    <div className="container">
-        <div className="row justify-content-md-center">
+    <div className="updateIssue container">
+        <div className="row justify-content-center">
             <div className="col-6">
             <form method="get" onSubmit={handleSubmit} className="mt-3">
                 <h5>Update issue</h5>     
@@ -57,6 +57,10 @@ return (
             </div>
         </div>
     </div>
+    )
+}
+    return(
+        <Redirect to='/' />
     )
   
 };

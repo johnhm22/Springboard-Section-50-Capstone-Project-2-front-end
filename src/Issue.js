@@ -1,30 +1,25 @@
-import { useParams } from 'react-router-dom';
-import React from "react";
+import React, { useContext } from "react";
+import { useParams, Redirect } from 'react-router-dom';
+import UserContext from './userContext';
 import IssueHistory from './IssueHistory';
 import moment from "moment";
-
-
-
-
-// import UserContext from './userContext';
+import './Issue.css';
 
 
 function Issue ({issues}) {
 
+    const loggedInUser = useContext(UserContext);
+
     const {id} = useParams();
 
+    const issueDetail = issues.filter(issue => issue.id === parseInt(id));   
 
-    const issueDetail = issues.filter(issue => issue.id === parseInt(id));
-    console.log("issueDetail: ", issueDetail);
-
-   
-
-
+    if(loggedInUser){
     return(
         <>
-        <div className="container mt-5">
+        <div className="container issue col-lg-8 mt-5">
             <div className="row justify-content-md-center">
-                <div className="col-8">
+                <div className="col-12">
                 <table className="table table-striped">
                 <thead>
                     <tr>
@@ -32,6 +27,7 @@ function Issue ({issues}) {
                     <th>Date raised</th>
                     <th>Status</th>
                     <th>Category</th>
+                    <th>Property</th>
                     <th>Description</th>
                     </tr>
                 </thead>
@@ -41,6 +37,7 @@ function Issue ({issues}) {
                     <td>{moment(issueDetail[0].created_on).format("ddd Do MMMM")}</td>
                     <td>{issueDetail[0].status}</td>
                     <td>{issueDetail[0].category}</td>
+                    <td>{issueDetail[0].property}</td>
                     <td>{issueDetail[0].description}</td>
                     </tr>
                 </tbody>
@@ -51,6 +48,11 @@ function Issue ({issues}) {
         </div>
         </>
     )
+}
+    return(
+        <Redirect to='/' />
+    )
+
 }
 
 export default Issue;

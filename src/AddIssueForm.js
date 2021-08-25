@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
+import UserContext from './userContext';
 import EstateApi from './api';
+import './AddIssueForm.css'
 
 const AddIssueForm = () => {
+
+    // causes error with smoke test
+    const loggedInUser = useContext(UserContext);
+
 
     const {user} = useParams();
     
@@ -10,6 +16,7 @@ const AddIssueForm = () => {
 
     const initialState = {
         title: "",
+        property: "",
         category: "",
         description: ""
     }
@@ -37,12 +44,12 @@ const AddIssueForm = () => {
     //   }
     // }
 
-    async function addIssue(user, title, category, description) {
+    async function addIssue(user, title, property, category, description) {
         console.log("user in addIssue function addIssueForm ", user);
         console.log("addIssue function called"); //undefined
         try {
             //add in authentication of username and password
-            let results = await EstateApi.addIssue(user, title, description, category)
+            let results = await EstateApi.addIssue(user, title, property, description, category)
             console.log("results ", results)
             history.push(`/issues/${user}`)
             }
@@ -64,16 +71,15 @@ const handleChange = (e) => {
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    const {title, category, description} = formData;
-    addIssue(user, title, category, description);
+    const {title, property, category, description} = formData;
+    addIssue(user, title, property, category, description);
     setFormData(initialState);
 }
 
 
-// title, username, status, category, description
-
+if(loggedInUser){
 return (
-    <div className="container">
+    <div className="container col-lg-6 addissue">
         <div className="row justify-content-md-center">
             <div className="col-6">
                 <form method="get" onSubmit={handleSubmit} className="mt-3">
@@ -82,6 +88,12 @@ return (
                     <div className="form-group">
                     <label htmlFor="title"></label>
                     <input className="form-control" type="text" name="title" id="title" value={formData.title} onChange={handleChange} placeholder="Title..." />
+                    </div>
+
+
+                    <div className="form-group">
+                    <label htmlFor="property"></label>
+                    <input className="form-control" type="text" name="property" id="property" value={formData.property} onChange={handleChange} placeholder="Property..." />
                     </div>
                     
                     <div className="form-group">
@@ -105,7 +117,13 @@ return (
         </div>
     </div>
     )
-  
+}
+ 
+    return(
+        <Redirect to='/' />
+    )
+
 };
+
 
 export default AddIssueForm;

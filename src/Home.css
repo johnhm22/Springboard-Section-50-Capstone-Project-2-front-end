@@ -1,3 +1,7 @@
 .Home {
     text-align: center;
   }
+
+.container-fluid {
+  background-color: rgba(240,248,255, 0.5);
+}

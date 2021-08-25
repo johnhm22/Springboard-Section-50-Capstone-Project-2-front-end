@@ -1,16 +1,23 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import EstateApi from './api';
-import React, {useState, useEffect, Redirect} from "react";
+import React, {useState, useEffect, Redirect, useContext} from "react";
+import UserContext from './userContext';
 import moment from "moment";
 import axios from 'axios';
 import IssueUpdateForm from './IssueUpdateForm';
+import './IssueHistory.css';
+import {v4 as uuid} from "uuid";
 
 
 
 function IssueHistory () {
 
+    //causes error with smoke test
+    const loggedInUser = useContext(UserContext);
+
     const [isLoading, setIsLoading] = useState(true);
 
+    //stops smoke test
     const {user, id} = useParams();
 
     const [issueHistory, setIssueHistory] = useState();
@@ -18,7 +25,6 @@ function IssueHistory () {
     async function updateHistory(update_by, description, checked) {
         try {
             //add in authentication of username and password
-            console.log("checked is: ", checked);
             const status = checked === true? 'closed': 'open'
             console.log("status in updateHistory function ", status);
             let res = await axios({
@@ -51,12 +57,13 @@ useEffect( () => {
         return <p>Loading &hellip;</p>;
       }
 
+if(loggedInUser){
     return(
         <>
-        <div className="container mt-5">
-            <div className="row justify-content-md-center">
+        <div className="issueHistory container mt-5">
+            <div className="row justify-content-center">
                 <div className="col-8">
-                <h4>Update history for this issue</h4>
+                <h4>Issue history</h4>
                 <table className="table table-striped">
                 <thead>
                     <tr>
@@ -80,7 +87,13 @@ useEffect( () => {
             </div>
         </div>
         </>
+        )
+    }
+
+    return(
+        <Redirect to='/' />
     )
+
 }
 
 export default IssueHistory;
