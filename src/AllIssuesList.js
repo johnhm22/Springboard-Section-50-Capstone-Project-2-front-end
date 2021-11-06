@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import EstateApi from './api';
 import moment from "moment";
 import UserContext from './userContext';
-import './AllIssuesList.css'
+// import './AllIssuesList.css'
 
 
 function AllIssuesList ({updateIssues, issues}) {

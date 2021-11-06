@@ -19,10 +19,10 @@ class EstateApi {
       return res.data;
   }
 
-  static async addIssue(user, title, property, description, category) {
+  static async addIssue(user, title, property, category, description) {
       let res = await axios({
         method: "patch",
-        url: `${BASE_URL}/issues/${user}/add}`,
+        url: `${BASE_URL}/issues/${user}/add`,
         data: {
         username: user,
         title,

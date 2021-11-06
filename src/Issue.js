@@ -34,7 +34,7 @@ function Issue ({issues}) {
                 <tbody>
                     <tr>
                     <td>{issueDetail[0].title}</td>
-                    <td>{moment(issueDetail[0].created_on).format("ddd Do MMMM")}</td>
+                    <td>{moment(issueDetail[0].created_on).format("ddd Do MMMM YYYY")}</td>
                     <td>{issueDetail[0].status}</td>
                     <td>{issueDetail[0].category}</td>
                     <td>{issueDetail[0].property}</td>
