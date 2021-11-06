@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import UserContext from './userContext';
 import EstateApi from './api';
-import './AddIssueForm.css'
+// import './AddIssueForm.css'
 
 const AddIssueForm = () => {
 
@@ -23,26 +23,7 @@ const AddIssueForm = () => {
     const [formData, setFormData] = useState(initialState);
 
 
-    // async function addIssue(user, title, category, description, status='open') {
-    //     try {
-    //         //add in authentication of username and password
-    //         console.log("user, title, category, description: ", user, title, category, description);
-    //         console.log("addIssue function called");
-    //         await axios({
-    //           method: 'patch',
-    //           url: `http://localhost:3001/issues/${user}/add`,
-    //           data: {
-    //             username: user,
-    //             title,
-    //             category,
-    //             description,
-    //             status                
-    //         }
-    //       });
-    //   } catch(err) {
-    //       console.log(err);
-    //   }
-    // }
+    
 
     async function addIssue(user, title, property, category, description) {
         console.log("user in addIssue function addIssueForm ", user);
@@ -57,8 +38,6 @@ const AddIssueForm = () => {
           console.log(err);
       }
     }
-
-
 
 
 const handleChange = (e) => {
