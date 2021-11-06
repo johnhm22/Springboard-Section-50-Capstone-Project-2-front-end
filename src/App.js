@@ -15,7 +15,7 @@ import AddIssueForm from './AddIssueForm';
 import AllIssuesList from './AllIssuesList';
 // import UserProfile from './UserProfile';
 
-
+const BASE_URL = process.env.REACT_APP_BASE_URL || "https://capstone2backend.herokuapp.com";
 
 function App() {
 
@@ -31,7 +31,7 @@ function App() {
     try {
         const res = await axios({
           method: 'post',
-          url: `http://localhost:3001/users/login`,
+          url: `${BASE_URL}/users/login`,
           data: {
             username,
             password
@@ -54,7 +54,7 @@ async function signup(username, password, firstname, lastname, email, firstPrope
   try{
   let res = await axios({
     method: 'post',
-    url: `http://localhost:3001/users/register`,
+    url: `${BASE_URL}/users/register`,
     data: {
       username,
       password,
