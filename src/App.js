@@ -13,7 +13,7 @@ import axios from "axios";
 import IssueUpdateForm from './IssueUpdateForm';
 import AddIssueForm from './AddIssueForm';
 import AllIssuesList from './AllIssuesList';
-import UserProfile from './UserProfile';
+// import UserProfile from './UserProfile';
 
 
 
@@ -92,9 +92,9 @@ async function signup(username, password, firstname, lastname, email, firstPrope
         <Route exact path='/signup'>
         <SignupForm signup={signup}/>
         </Route>
-        <Route exact path='/user/:user/profile'>
+        {/* <Route exact path='/user/:user/profile'>
         <UserProfile />
-        </Route>
+        </Route> */}
         <Route exact path='/issues/'>
         <AllIssuesList issues = {issues} updateIssues = {updateIssues}/>
         </Route>
