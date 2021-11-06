@@ -32,8 +32,6 @@ const validate = values => {
 
 const SignupForm = ({signup}) => {
 
-    console.log("signup function called");
-
     const history = useHistory();
 
     const formik = useFormik({

@@ -17,6 +17,10 @@ import AllIssuesList from './AllIssuesList';
 
 
 
+const BASE_URL = "https://managemyestate.herokuapp.com";
+// const BASE_URL = "http://localhost:3001";
+
+
 function App() {
 
   const [currentUser, setUser] = useState();
@@ -31,7 +35,7 @@ function App() {
     try {
         const res = await axios({
           method: 'post',
-          url: `http://localhost:3001/users/login`,
+          url: `${BASE_URL}/users/login`,
           data: {
             username,
             password
@@ -54,7 +58,7 @@ async function signup(username, password, firstname, lastname, email, firstPrope
   try{
   let res = await axios({
     method: 'post',
-    url: `http://localhost:3001/users/register`,
+    url: `${BASE_URL}/users/register`,
     data: {
       username,
       password,
