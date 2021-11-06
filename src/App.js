@@ -17,7 +17,7 @@ import AllIssuesList from './AllIssuesList';
 
 
 
-const BASE_URL = "https://managemyestate.herokuapp.com";
+const BASE_URL = "https://capstone2backend.herokuapp.com/";
 // const BASE_URL = "http://localhost:3001";
 
 
